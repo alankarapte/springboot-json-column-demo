@@ -1,9 +1,9 @@
 package com.alankar.springbootjsoncolumnexample.domain;
 
-import java.io.Serializable;
-
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
@@ -11,7 +11,6 @@ import org.hibernate.annotations.Type;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 @Entity
 @Table
@@ -24,10 +23,7 @@ public class Person extends EntityWithUUID {
 	private int age;
 	
 	@Type(type = "jsonb")
-    @Column( columnDefinition = "jsonb")
-	private Address addressPermanent;			//demo jsonb
-
-	@Type(type = "json")
     @Column( columnDefinition = "json")
-	private Address addressTemporary;			//demo json
+	@Basic(fetch = FetchType.LAZY)
+	private Address addressPermanent;
 }

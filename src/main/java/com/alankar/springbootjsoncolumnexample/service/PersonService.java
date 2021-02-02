@@ -1,17 +1,13 @@
 package com.alankar.springbootjsoncolumnexample.service;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.alankar.springbootjsoncolumnexample.domain.Address;
 import com.alankar.springbootjsoncolumnexample.domain.Person;
 import com.alankar.springbootjsoncolumnexample.dto.AddressDTO;
 import com.alankar.springbootjsoncolumnexample.dto.PersonDTO;
@@ -36,9 +32,19 @@ public class PersonService {
 					BeanUtils.copyProperties(personDTO, person);
 					BeanUtils.copyProperties(addressDTO, person.getAddressPermanent());
 					personDTO.setAddressPermanent(addressDTO);
-					BeanUtils.copyProperties(addressDTO, person.getAddressTemporary());
-					personDTO.setAddressTemporary(addressDTO);
+
 					return personDTO;
 				}).collect(Collectors.toList());		 
+	}
+
+	public void addPerson(PersonDTO personDTO) {
+		Person person = new Person();
+		Address address = new Address();
+
+		BeanUtils.copyProperties(person, personDTO);
+		BeanUtils.copyProperties(address, personDTO.getAddressPermanent());
+		person.setAddressPermanent(address);
+
+		personRepository.save(person);		
 	}
 }

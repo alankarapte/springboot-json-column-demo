@@ -15,12 +15,7 @@ public class PersonDTO {
 	
 	private String name;
 	private int age;
-	
-	@Type(type = "jsonb")
-    @Column( columnDefinition = "jsonb")
+
 	private AddressDTO addressPermanent;			//demo jsonb
 
-	@Type(type = "json")
-    @Column( columnDefinition = "json")
-	private AddressDTO addressTemporary;			//demo json
 }
