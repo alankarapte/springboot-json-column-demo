@@ -15,6 +15,28 @@ JSON usage - https://vladmihalcea.com/how-to-map-json-objects-using-generic-hibe
 
 Swagger - https://dzone.com/articles/spring-boot-restful-api-documentation-with-swagger
 
+### To make use of the JSON Hibernate Types, we must declare them using the @TypeDef annotation:
+@TypeDefs({
+    @TypeDef(name = "json", typeClass = JsonStringType.class),
+    @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+})
+
+### MySQL 5.7 adds support for JSON types, which, at the JDBC level, need to be materialized as String. For this reason, we are going to use JsonStringType.
+    @Type(type = "json")
+    @Column(columnDefinition = "json")
+    private Location location;
+
+
+### For the JSON column type, the two JSON Object(s) mapping must be changed as follows
+    @Type(type = "jsonb")
+    @Column(columnDefinition = "json")
+    private Location location;
+    
+OR
+
+    @Type(type = "jsonb")
+    @Column(columnDefinition = "jsonb")
+    private Location location;
 
 
 ---
